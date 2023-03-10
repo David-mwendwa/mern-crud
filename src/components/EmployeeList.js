@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Alert, Button, Modal } from 'react-bootstrap';
 import { EmployeeContext } from '../contexts/EmployeeContext';
 import AddForm from './AddForm';
 import Employee from './Employee';
@@ -7,13 +7,25 @@ import Employee from './Employee';
 const EmployeeList = () => {
   const { employees } = useContext(EmployeeContext);
 
+  const [showAlert, setShowAlert] = useState(false);
+  console.log({showAlert});
+
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+  const handleShowAlert = () => {
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+  };
 
   useEffect(() => {
     handleClose();
+    return () => {
+      handleShowAlert();
+    };
   }, [employees]);
 
   return (
@@ -36,6 +48,9 @@ const EmployeeList = () => {
           </div>
         </div>
       </div>
+      <Alert show={showAlert} variant='success'>
+        Emlployee List Updated Succefully!
+      </Alert>
       <table className='table table-striped table-hover'>
         <thead>
           <tr>
@@ -47,11 +62,13 @@ const EmployeeList = () => {
           </tr>
         </thead>
         <tbody>
-          {employees.map((employee) => (
-            <tr key={employee.id}>
-              <Employee employee={employee} />
-            </tr>
-          ))}
+          {employees
+            .sort((a, b) => (a.name < b.name ? -1 : 1))
+            .map((employee) => (
+              <tr key={employee.id}>
+                <Employee employee={employee} />
+              </tr>
+            ))}
         </tbody>
       </table>
       <Modal show={show} onHide={handleClose}>
@@ -67,7 +84,6 @@ const EmployeeList = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      
     </>
   );
 };
