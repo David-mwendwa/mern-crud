@@ -1,15 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { EmployeeContext } from '../contexts/EmployeeContext';
 import EditForm from './EditForm';
 
 const Employee = ({ employee }) => {
-  const { removeEmployee, editEmployee } = useContext(EmployeeContext);
+  const { removeEmployee } = useContext(EmployeeContext);
 
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+
+  useEffect(() => {
+    handleClose();
+  }, [employee]);
 
   return (
     <>
@@ -18,7 +22,10 @@ const Employee = ({ employee }) => {
       <td>{employee.address}</td>
       <td>{employee.phone}</td>
       <td>
-        <button onClick={handleShow} className='btn text-warning btn-act' data-toggle='modal'>
+        <button
+          onClick={handleShow}
+          className='btn text-warning btn-act'
+          data-toggle='modal'>
           <i className='material-icons' data-toggle='tooltip' title='Edit'>
             &#xE254;
           </i>
@@ -37,7 +44,7 @@ const Employee = ({ employee }) => {
           <Modal.Title>Edit Employee</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <EditForm />
+          <EditForm theEmployee={employee} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={handleClose}>

@@ -3,20 +3,15 @@ import { Button, Form } from 'react-bootstrap';
 import { EmployeeContext } from '../contexts/EmployeeContext';
 import useInput from './utils/useInput';
 
-const EditForm = () => {
+const EditForm = ({ theEmployee }) => {
+  const { id } = theEmployee;
   const { updateEmployee } = useContext(EmployeeContext);
-  const { values, resetValues, handleChange } = useInput({
-    name: '',
-    email: '',
-    address: '',
-    phone: '',
-  });
+  const { values, handleChange } = useInput(theEmployee);
   const { name, email, address, phone } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateEmployee({ name, email, address, phone });
-    resetValues();
+    updateEmployee(id, { id, name, email, address, phone });
   };
 
   return (
