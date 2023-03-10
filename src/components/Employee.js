@@ -1,8 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
 import { EmployeeContext } from '../contexts/EmployeeContext';
+import EditForm from './EditForm';
 
 const Employee = ({ employee }) => {
-  const { removeEmployee } = useContext(EmployeeContext);
+  const { removeEmployee, editEmployee } = useContext(EmployeeContext);
+
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   return (
     <>
@@ -11,7 +18,7 @@ const Employee = ({ employee }) => {
       <td>{employee.address}</td>
       <td>{employee.phone}</td>
       <td>
-        <button className='btn text-warning btn-act' data-toggle='modal'>
+        <button onClick={handleShow} className='btn text-warning btn-act' data-toggle='modal'>
           <i className='material-icons' data-toggle='tooltip' title='Edit'>
             &#xE254;
           </i>
@@ -25,6 +32,19 @@ const Employee = ({ employee }) => {
           </i>
         </button>
       </td>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Employee</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <EditForm />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleClose}>
+            Close Button
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

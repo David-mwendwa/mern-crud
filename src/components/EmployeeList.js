@@ -67,6 +67,7 @@ const EmployeeList = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      
     </>
   );
 };
