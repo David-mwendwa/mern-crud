@@ -21,7 +21,7 @@ const AddForm = () => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group>
+      <Form.Group className='mb-3'>
         <Form.Control
           type='text'
           placeholder='Name *'
@@ -31,7 +31,7 @@ const AddForm = () => {
           required
         />
       </Form.Group>
-      <Form.Group>
+      <Form.Group className='mb-3'>
         <Form.Control
           type='email'
           placeholder='Email *'
@@ -41,7 +41,7 @@ const AddForm = () => {
           required
         />
       </Form.Group>
-      <Form.Group>
+      <Form.Group className='mb-3'>
         <Form.Control
           as='textarea'
           placeholder='Address'
@@ -51,7 +51,7 @@ const AddForm = () => {
           onChange={handleChange}
         />
       </Form.Group>
-      <Form.Group>
+      <Form.Group className='mb-3'>
         <Form.Control
           type='text'
           placeholder='Phone'
